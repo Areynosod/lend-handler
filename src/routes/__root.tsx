@@ -13,7 +13,7 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
-import { getUserFn } from '@/lib/supabase/auth'
+import { getUserFn, getUserRole } from '@/lib/supabase/auth'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -44,11 +44,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   beforeLoad: async () => {
     try {
       const { user } = await getUserFn()
-      return { user }
+      const { role } = await getUserRole()
+      return { user, role }
     } catch (_) {
-      return { user: null }
+      return { user: null, role: null }
     }
   },
+  notFoundComponent: () => <div>Not Found</div>,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {

@@ -1,10 +1,12 @@
 import {
   HeadContent,
+  Outlet,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { Navbar } from '@/components/Navbar'
 
 import TanStackQueryProvider from '../integrations/tanstack-query/root-provider'
 
@@ -50,8 +52,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       return { user: null, role: null }
     }
   },
+  component: RootComponent,
   notFoundComponent: () => <div>Not Found</div>,
 })
+
+function RootComponent() {
+  const { user } = Route.useRouteContext()
+  return (
+    <>
+      {user && <Navbar />}
+      <Outlet />
+    </>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (

@@ -305,7 +305,7 @@ export default function SignUpForm() {
             {([isSubmitting]) => (
               <Button
                 type="submit"
-                className="w-full h-11 text-base font-bold shadow-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white"
+                className="w-full h-11 text-base font-bold shadow-lg "
                 disabled={isSubmitting || signUpMutation.isPending}
               >
                 {isSubmitting || signUpMutation.isPending
@@ -319,10 +319,7 @@ export default function SignUpForm() {
 
       <p className="text-center text-sm text-slate-600 dark:text-slate-400">
         ¿Ya tienes una cuenta?{' '}
-        <Link
-          to="/signin"
-          className="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-        >
+        <Link to="/signin" className="font-semibold ">
           Inicia sesión
         </Link>
       </p>

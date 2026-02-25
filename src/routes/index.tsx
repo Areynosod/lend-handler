@@ -1,3 +1,4 @@
+import { Dashboard } from '@/features/dashboard/Dashboard'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -10,9 +11,5 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
-  return (
-    <div className="flex w-full max-w-7xl mx-auto flex-col gap-4 p-6">
-      <p>home screen</p>
-    </div>
-  )
+  return <Dashboard />
 }

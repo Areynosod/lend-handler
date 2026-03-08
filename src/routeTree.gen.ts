@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DeudorDebtorIdRouteImport } from './routes/deudor.$debtorId'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthSigninRouteImport } from './routes/_auth/signin'
 
@@ -27,6 +28,11 @@ const AuthRoute = AuthRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeudorDebtorIdRoute = DeudorDebtorIdRouteImport.update({
+  id: '/deudor/$debtorId',
+  path: '/deudor/$debtorId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/signin': typeof AuthSigninRoute
   '/signup': typeof AuthSignupRoute
+  '/deudor/$debtorId': typeof DeudorDebtorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/signin': typeof AuthSigninRoute
   '/signup': typeof AuthSignupRoute
+  '/deudor/$debtorId': typeof DeudorDebtorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,19 +67,28 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/_auth/signin': typeof AuthSigninRoute
   '/_auth/signup': typeof AuthSignupRoute
+  '/deudor/$debtorId': typeof DeudorDebtorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/signin' | '/signup'
+  fullPaths: '/' | '/admin' | '/signin' | '/signup' | '/deudor/$debtorId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/signin' | '/signup'
-  id: '__root__' | '/' | '/_auth' | '/admin' | '/_auth/signin' | '/_auth/signup'
+  to: '/' | '/admin' | '/signin' | '/signup' | '/deudor/$debtorId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/admin'
+    | '/_auth/signin'
+    | '/_auth/signup'
+    | '/deudor/$debtorId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
   AdminRoute: typeof AdminRoute
+  DeudorDebtorIdRoute: typeof DeudorDebtorIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,6 +112,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deudor/$debtorId': {
+      id: '/deudor/$debtorId'
+      path: '/deudor/$debtorId'
+      fullPath: '/deudor/$debtorId'
+      preLoaderRoute: typeof DeudorDebtorIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/signup': {
@@ -130,6 +154,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
   AdminRoute: AdminRoute,
+  DeudorDebtorIdRoute: DeudorDebtorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
